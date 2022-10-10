@@ -1,10 +1,10 @@
 # SDLE First Assignment
 
-SDLE First Assignment of group T&lt;m&gt;&lt;n&gt;G&lt;p&gt;&lt;q&gt;.
+SDLE First Assignment of group T06G11.
 
 Group members:
 
-1. &lt;first name&gt; &lt;family name&gt; (&lt;email address&gt;)
-2. &lt;first name&gt; &lt;family name&gt; (&lt;email address&gt;)
-3. &lt;first name&gt; &lt;family name&gt; (&lt;email address&gt;)
-4. &lt;first name&gt; &lt;family name&gt; (&lt;email address&gt;)
+1. Bruno Gomes (up201906401@edu.fe.up.pt)
+2. Fernando Rego (up201905951@edu.fe.up.pt)
+3. José Silva (up201904775@edu.fe.up.pt)
+4. Rui Moreira (up201906355@edu.fe.up.pt)
