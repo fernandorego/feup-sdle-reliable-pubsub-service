@@ -6,6 +6,7 @@ SDLE First Assignment of group T06G11.
 
 - [ ] Implement a pub/sub with JeroMQ, synchronous
 - [ ] Find the most suitable pattern for PUB/SUB (Espresso looks ok)
+- [ ] Create a mecanism from message UID (hashing the message, and summing the thread ID, to allow sending equal messages but in different requests) 
 - [ ] Save state upon process failure:
     - [ ] Make the broker(that as topics) save its state, when the process dies. (Save the state to a file, etc…)
     - [ ] Make the subscriber save, its state, when the process dies (Offset, and messages received) (Save the state to a file, etc…)
