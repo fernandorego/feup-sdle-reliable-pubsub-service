@@ -4,7 +4,7 @@ SDLE First Assignment of group T06G11.
 
 ## **Work distribution**
 
-- [ ] Implement a pub/sub with JeroMQ, synchronous
+- [x] Implement a pub/sub with JeroMQ, synchronous (Fernando Rego)
 - [ ] Find the most suitable pattern for PUB/SUB (Espresso looks ok)
 - [ ] Create a broker, server like intermediate of communication containing topics
 - [ ] Create a mecanism from message UID (hashing the message, and summing the thread ID, to allow sending equal messages but in different requests) 
