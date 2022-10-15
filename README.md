@@ -4,8 +4,8 @@ SDLE First Assignment of group T06G11.
 
 ## **Work distribution**
 
-- [x] Implement a pub/sub with JeroMQ, synchronous (Fernando Rego)
-- [ ] Find the most suitable pattern for PUB/SUB (Espresso looks ok)
+- [x] Implement a request/reply with JeroMQ, synchronous (Fernando Rego && Rui Moreira)
+- [ ] Find the most suitable pattern for Request/Reply (Lazy Pirate Pattern)
 - [ ] Create a broker, server like intermediate of communication containing topics
   - [ ] Create broker capable of having multiple topics 
   - [ ] Create topic 
