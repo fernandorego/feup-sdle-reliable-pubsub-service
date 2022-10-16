@@ -1,4 +1,4 @@
-package pub_sub_service.src.main.java.server.broker;
+package server.broker;
 
 import java.util.Random;
 
@@ -14,7 +14,7 @@ import org.zeromq.ZContext;
 //  - echoes request as-is
 //  - randomly runs slowly, or exits to simulate a crash.
 //
-public class brokerServer
+public class BrokerServer
 {
 
     public static void main(String[] argv) throws Exception

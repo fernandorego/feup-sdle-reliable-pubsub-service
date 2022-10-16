@@ -1,15 +1,10 @@
-package pub_sub_service.src.main.java.client.subscriber;
+package client.publisher;
 
 import org.zeromq.SocketType;
 import org.zeromq.ZContext;
-import org.zeromq.ZMQ.Poller;
-import org.zeromq.ZMQ.Socket;
+import org.zeromq.ZMQ;
 
-//
-// Lazy Pirate client
-// Use zmq_poll to do a safe request-reply
-// To run, start lpserver and then randomly kill/restart it
-public class subscriberClient {
+public class PublisherClient {
     private final static int    REQUEST_TIMEOUT = 2500;                  //  msecs, (> 1000!)
     private final static int    REQUEST_RETRIES = 3;                     //  Before we abandon
     private final static String SERVER_ENDPOINT = "tcp://localhost:5555";
@@ -18,12 +13,12 @@ public class subscriberClient {
     {
         try (ZContext ctx = new ZContext()) {
             System.out.println("I: connecting to server");
-            Socket client = ctx.createSocket(SocketType.REQ);
+            ZMQ.Socket client = ctx.createSocket(SocketType.REQ);
             assert (client != null);
             client.connect(SERVER_ENDPOINT);
 
-            Poller poller = ctx.createPoller(1);
-            poller.register(client, Poller.POLLIN);
+            ZMQ.Poller poller = ctx.createPoller(1);
+            poller.register(client, ZMQ.Poller.POLLIN);
 
             int sequence = 0;
             int retriesLeft = REQUEST_RETRIES;
@@ -78,7 +73,7 @@ public class subscriberClient {
                         System.out.println("I: reconnecting to server\n");
                         client = ctx.createSocket(SocketType.REQ);
                         client.connect(SERVER_ENDPOINT);
-                        poller.register(client, Poller.POLLIN);
+                        poller.register(client, ZMQ.Poller.POLLIN);
                         //  Send request again, on new socket
                         client.send(request);
                     }
@@ -87,4 +82,3 @@ public class subscriberClient {
         }
     }
 }
-

@@ -13,7 +13,7 @@
         <maven.compiler.target>18</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <exec.mainClass>publisher.Publisher</exec.mainClass>
+        <exec.mainClass>server.broker.BrokerServer</exec.mainClass>
     </properties>
 
     <dependencies>
