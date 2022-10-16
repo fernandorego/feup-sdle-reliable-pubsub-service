@@ -4,10 +4,13 @@ SDLE First Assignment of group T06G11.
 
 ## **Work distribution**
 
-- [x] Implement a pub/sub with JeroMQ, synchronous (Fernando Rego)
-- [ ] Find the most suitable pattern for PUB/SUB (Espresso looks ok)
+- [x] Implement a request/reply with JeroMQ, synchronous (Fernando Rego && Rui Moreira)
+- [ ] Find the most suitable pattern for Request/Reply (Lazy Pirate Pattern)
 - [ ] Create a broker, server like intermediate of communication containing topics
-- [ ] Create a mecanism from message UID (hashing the message, and summing the thread ID, to allow sending equal messages but in different requests) 
+  - [ ] Create broker capable of having multiple topics 
+  - [ ] Create topic 
+  - [ ] Create message class
+- [ ] Create a mechanism from message UID (hashing the message, and summing the thread ID, to allow sending equal messages but in different requests) 
 - [ ] Save state upon process failure:
     - [ ] Make the broker(that as topics) save its state, when the process dies. (Save the state to a file, etc…)
     - [ ] Make the subscriber save, its state, when the process dies (Offset, and messages received) (Save the state to a file, etc…)
@@ -22,6 +25,8 @@ SDLE First Assignment of group T06G11.
     - [ ] Publisher, receive the message and being able to handle failure and guarantying exactly once (Synchronised offsets)
 - [ ] If we have time: 
     - [ ] Implement High Water Mark in the broker, to clean topic messages, that are not necessary! (We need to make sure, the ACKS have been received)
+- [ ] External Libraries: 
+  - [x] Log4j, java logger
 
 Group members:
 
