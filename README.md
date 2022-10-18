@@ -2,6 +2,40 @@
 
 SDLE First Assignment of group T06G11.
 
+## **Compile and Run**
+
+#### Run client
+
+###### Put operation
+
+```
+bash client.sh put <topic> <path_to_file>
+```
+
+###### Get operation
+
+```
+bash client.sh get <topic> <client_id>
+```
+
+###### Subscribe operation
+
+```
+bash client.sh subscribe <topic> <client_id>
+```
+
+###### Unsubscribe operation
+
+```
+bash client.sh unsubscribe <topic> <client_id>
+```
+
+#### Run broker
+
+```
+bash broker.sh
+```
+
 ## **Work distribution**
 
 - [x] Implement a request/reply with JeroMQ, synchronous (Fernando Rego && Rui Moreira)
@@ -26,7 +60,7 @@ SDLE First Assignment of group T06G11.
 - [ ] If we have time: 
     - [ ] Implement High Water Mark in the broker, to clean topic messages, that are not necessary! (We need to make sure, the ACKS have been received)
 - [ ] External Libraries: 
-  - [x] Log4j, java logger
+  - [x] Log4j, java logger, GSON
 
 Group members:
 
