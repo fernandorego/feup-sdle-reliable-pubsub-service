@@ -13,11 +13,10 @@
         <maven.compiler.target>18</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <exec.mainClass>server.broker.BrokerServer</exec.mainClass>
+        <exec.mainClass>broker.Broker</exec.mainClass>
     </properties>
 
     <dependencies>
-        <!-- https://mvnrepository.com/artifact/org.zeromq/jeromq -->
         <dependency>
             <groupId>org.zeromq</groupId>
             <artifactId>jeromq</artifactId>

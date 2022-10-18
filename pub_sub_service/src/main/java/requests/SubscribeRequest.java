@@ -1,4 +1,4 @@
-package client.requests;
+package requests;
 
 public class SubscribeRequest extends Request {
     private final String id;

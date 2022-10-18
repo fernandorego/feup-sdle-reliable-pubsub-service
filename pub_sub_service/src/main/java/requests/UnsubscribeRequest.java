@@ -1,4 +1,4 @@
-package client.requests;
+package requests;
 
 public class UnsubscribeRequest extends Request {
     private final String id;

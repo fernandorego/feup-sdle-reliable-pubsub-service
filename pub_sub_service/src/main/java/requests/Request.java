@@ -1,8 +1,7 @@
-package client.requests;
+package requests;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import zmq.socket.reqrep.Req;
 
 public abstract class Request {
     public final String topic;

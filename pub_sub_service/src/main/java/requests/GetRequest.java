@@ -1,4 +1,4 @@
-package client.requests;
+package requests;
 
 public class GetRequest extends Request {
     private final String id;
