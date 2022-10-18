@@ -22,16 +22,16 @@ public class Broker
                 cycles++;
 
                 if (cycles > 3 && rand.nextInt(3) == 0) {
-                    System.out.println("I: simulating a crash");
+                    System.out.println("Simulating a crash");
                     break;
                 }
                 else if (cycles > 3 && rand.nextInt(3) == 0) {
-                    System.out.println("I: simulating CPU overload");
+                    System.out.println("Simulating CPU overload");
                     Thread.sleep(2000);
                 }
-                System.out.printf("I: normal request (%s)\n", request);
+                System.out.printf("Normal request (%s)\n", request);
                 Thread.sleep(1000);
-                server.send(request);
+                server.send("RECEIVED");
             }
         }
     }
