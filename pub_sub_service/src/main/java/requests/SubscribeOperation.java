@@ -1,10 +1,10 @@
 package requests;
 
-public class SubscribeRequest extends Request {
+public class SubscribeOperation extends Operation {
     private final String id;
 
-    public SubscribeRequest(String id, String topic) {
-        super(topic, RequestType.SUBSCRIBE);
+    public SubscribeOperation(String id, String topic) {
+        super(topic, OperationType.SUBSCRIBE);
         this.id = id;
     }
 

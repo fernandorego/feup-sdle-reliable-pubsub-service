@@ -1,5 +1,5 @@
 package requests;
 
-public enum RequestType {
+public enum OperationType {
     PUT, GET, SUBSCRIBE, UNSUBSCRIBE
 }

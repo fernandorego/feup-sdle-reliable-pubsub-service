@@ -1,11 +1,11 @@
 package requests;
 
-public class GetRequest extends Request {
+public class GetOperation extends Operation {
     private final String id;
     private final long offset;
 
-    public GetRequest(String id, String topic) {
-        super(topic, RequestType.GET);
+    public GetOperation(String id, String topic) {
+        super(topic, OperationType.GET);
         this.id = id;
         this.offset = 0; //TODO: get offset from file
     }

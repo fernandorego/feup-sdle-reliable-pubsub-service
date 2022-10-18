@@ -2,11 +2,11 @@ package requests;
 
 import com.google.gson.Gson;
 
-public class PutRequest extends Request {
+public class PutOperation extends Operation {
     private final String message;
 
-    public PutRequest(String topic, String message) {
-        super(topic, RequestType.PUT);
+    public PutOperation(String topic, String message) {
+        super(topic, OperationType.PUT);
         this.message = message;
     }
 
