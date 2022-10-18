@@ -1,5 +1,7 @@
 package requests;
 
+import com.google.gson.Gson;
+
 public class SubscribeOperation extends Operation {
     private final String id;
 
@@ -10,6 +12,6 @@ public class SubscribeOperation extends Operation {
 
     @Override
     public String requestToJson() {
-        return null;
+        return (new Gson()).toJson(this);
     }
 }

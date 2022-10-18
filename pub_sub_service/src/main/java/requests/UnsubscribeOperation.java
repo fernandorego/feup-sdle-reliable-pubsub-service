@@ -1,5 +1,7 @@
 package requests;
 
+import com.google.gson.Gson;
+
 public class UnsubscribeOperation extends Operation {
     private final String id;
     public UnsubscribeOperation(String id, String topic) {
@@ -9,6 +11,6 @@ public class UnsubscribeOperation extends Operation {
 
     @Override
     public String requestToJson() {
-        return null;
+        return (new Gson()).toJson(this);
     }
 }

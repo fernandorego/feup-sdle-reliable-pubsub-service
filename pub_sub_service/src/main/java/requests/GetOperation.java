@@ -1,5 +1,7 @@
 package requests;
 
+import com.google.gson.Gson;
+
 public class GetOperation extends Operation {
     private final String id;
     private final long offset;
@@ -12,6 +14,6 @@ public class GetOperation extends Operation {
 
     @Override
     public String requestToJson() {
-        return null;
+        return (new Gson()).toJson(this);
     }
 }
