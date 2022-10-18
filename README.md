@@ -4,6 +4,24 @@ SDLE First Assignment of group T06G11.
 
 ## **Compile and Run**
 
+
+#### Installation Dependencies
+
+- [Java](https://www.java.com/) - **Java 18** was used to develop this project
+- [Maven](https://maven.apache.org/)
+
+###### Dependencies we used installed by maven
+
+- [jeroMQ](https://github.com/zeromq/jeromq)
+- [log4j](https://logging.apache.org/log4j/2.x/)
+- [GSON](https://github.com/google/gson)
+
+#### Compile client
+
+```
+bash compile.sh
+```
+
 #### Run client
 
 ###### Put operation
@@ -38,12 +56,14 @@ bash broker.sh
 
 ## **Work distribution**
 
-- [x] Implement a request/reply with JeroMQ, synchronous (Fernando Rego && Rui Moreira)
-- [ ] Find the most suitable pattern for Request/Reply (Lazy Pirate Pattern)
+- [x] Implement a request/reply with JeroMQ, synchronous - Fernando Rego && Rui Moreira
+- [x] Find the most suitable pattern for Request/Reply (Lazy Pirate Pattern) - Rui Moreira
+- [x] Messages - Fernando Rego
+    - [x] Creation of classes and messages for each operation
+    - [x] Serialization and deserialization of the messages
 - [ ] Create a broker, server like intermediate of communication containing topics
-  - [ ] Create broker capable of having multiple topics 
-  - [ ] Create topic 
-  - [ ] Create message class
+    - [ ] Create broker capable of having multiple topics 
+    - [ ] Create topic 
 - [ ] Create a mechanism from message UID (hashing the message, and summing the thread ID, to allow sending equal messages but in different requests) 
 - [ ] Save state upon process failure:
     - [ ] Make the broker(that as topics) save its state, when the process dies. (Save the state to a file, etc…)
