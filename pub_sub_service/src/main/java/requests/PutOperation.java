@@ -10,6 +10,10 @@ public class PutOperation extends Operation {
         this.message = message;
     }
 
+    public String getMessage() {
+        return message;
+    }
+
     @Override
     public String requestToJson() {
         return (new Gson()).toJson(this);

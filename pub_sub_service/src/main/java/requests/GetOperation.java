@@ -12,6 +12,14 @@ public class GetOperation extends Operation {
         this.offset = 0; //TODO: get offset from file
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public long getOffset() {
+        return offset;
+    }
+
     @Override
     public String requestToJson() {
         return (new Gson()).toJson(this);

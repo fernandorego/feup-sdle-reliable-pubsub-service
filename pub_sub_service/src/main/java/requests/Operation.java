@@ -3,27 +3,40 @@ package requests;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
+import java.lang.reflect.Type;
+import java.util.HashMap;
+import java.util.Map;
+
 public abstract class Operation {
-    public final String topic;
-    public final OperationType type;
+    protected final String topic;
+    protected final OperationType type;
+
+    private static final Map<String, Type> operationMap = new HashMap<>() {
+        {
+            put("GET", GetOperation.class);
+            put("PUT", PutOperation.class);
+            put("SUBSCRIBE", SubscribeOperation.class);
+            put("UNSUBSCRIBE", UnsubscribeOperation.class);
+        }
+    };
+
     public Operation(String topic, OperationType type) {
         this.topic = topic;
         this.type = type;
     }
 
-    protected OperationType getType() {
-        return this.type;
-    }
     protected abstract String requestToJson();
 
+    public String getTopic() {
+        return topic;
+    }
+
+    public OperationType getType() {
+        return type;
+    }
+
     static public Operation jsonToRequest(String json) {
-        return switch (parseType(json)) {
-            case "GET" -> (new Gson()).fromJson(json, GetOperation.class);
-            case "PUT" -> (new Gson()).fromJson(json, PutOperation.class);
-            case "SUBSCRIBE" -> (new Gson()).fromJson(json, SubscribeOperation.class);
-            case "UNSUBSCRIBE" -> (new Gson()).fromJson(json, UnsubscribeOperation.class);
-            default -> null;
-        };
+        return (new Gson()).fromJson(json, operationMap.get(parseType(json)));
     }
 
     static public String parseType(String json) {
