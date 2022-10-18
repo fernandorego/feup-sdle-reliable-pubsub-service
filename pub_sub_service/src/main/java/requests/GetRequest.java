@@ -1,20 +1,13 @@
 package client.requests;
 
-public class GetRequest implements Request {
+public class GetRequest extends Request {
     private final String id;
-    private final String topic;
     private final long offset;
 
     public GetRequest(String id, String topic) {
+        super(topic, RequestType.GET);
         this.id = id;
-        this.topic = topic;
-
         this.offset = 0; //TODO: get offset from file
-    }
-
-    @Override
-    public String getType() {
-        return "GET";
     }
 
     @Override

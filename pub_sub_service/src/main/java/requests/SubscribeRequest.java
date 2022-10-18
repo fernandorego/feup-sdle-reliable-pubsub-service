@@ -1,17 +1,11 @@
 package client.requests;
 
-public class SubscribeRequest implements Request {
+public class SubscribeRequest extends Request {
     private final String id;
-    private final String topic;
 
     public SubscribeRequest(String id, String topic) {
+        super(topic, RequestType.SUBSCRIBE);
         this.id = id;
-        this.topic = topic;
-    }
-
-    @Override
-    public String getType() {
-        return "SUBSCRIBE";
     }
 
     @Override

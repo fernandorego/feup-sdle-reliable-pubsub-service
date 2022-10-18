@@ -2,18 +2,12 @@ package client.requests;
 
 import com.google.gson.Gson;
 
-public class PutRequest implements Request {
-    private final String topic;
+public class PutRequest extends Request {
     private final String message;
 
     public PutRequest(String topic, String message) {
-        this.topic = topic;
+        super(topic, RequestType.PUT);
         this.message = message;
-    }
-
-    @Override
-    public String getType() {
-        return "PUT";
     }
 
     @Override

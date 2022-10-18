@@ -3,6 +3,7 @@ package server.broker;
 import java.util.Random;
 
 import client.requests.PutRequest;
+import client.requests.Request;
 import org.zeromq.SocketType;
 import org.zeromq.ZMQ;
 import org.zeromq.ZMQ.Socket;
@@ -17,12 +18,8 @@ import org.zeromq.ZContext;
 //
 public class BrokerServer
 {
-
     public static void main(String[] argv) throws Exception
     {
-        PutRequest put = new PutRequest("pila", "pila na buceta");
-        System.out.println(put.requestToJson());
-        /*
         Random rand = new Random(System.nanoTime());
 
         try (ZContext context = new ZContext()) {
@@ -47,6 +44,6 @@ public class BrokerServer
                 Thread.sleep(1000); //  Do some heavy work
                 server.send(request);
             }
-        }*/
+        }
     }
 }

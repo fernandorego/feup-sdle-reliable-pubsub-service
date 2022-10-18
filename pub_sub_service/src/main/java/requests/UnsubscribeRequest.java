@@ -1,17 +1,10 @@
 package client.requests;
 
-public class UnsubscribeRequest implements Request {
+public class UnsubscribeRequest extends Request {
     private final String id;
-    private final String topic;
-
     public UnsubscribeRequest(String id, String topic) {
+        super(topic, RequestType.UNSUBSCRIBE);
         this.id = id;
-        this.topic = topic;
-    }
-
-    @Override
-    public String getType() {
-        return "UNSUBSCRIBE";
     }
 
     @Override
