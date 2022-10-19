@@ -20,6 +20,14 @@ public class FileUtils {
         }
     }
 
+    public static void stringToFile(String content, String file_path) {
+        try {
+            Files.write(Path.of(file_path), content.getBytes());
+        }catch (IOException e) {
+            System.out.println(e);
+        }
+    }
+
     public static void createDir(String path_dir) {
         File testDir = new File(path_dir);
         if (!testDir.exists() || !testDir.isDirectory()) {

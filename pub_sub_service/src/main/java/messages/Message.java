@@ -19,7 +19,7 @@ public abstract class Message {
             put("SUBSCRIBE", SubscribeMessage.class);
             put("SUBSCRIBE_RESPONSE", SubscribeResponseMessage.class);
             put("UNSUBSCRIBE", UnsubscribeMessage.class);
-            //put("UNSUBSCRIBE_RESPONSE", UnsubscribeMessage.class);
+            put("UNSUBSCRIBE_RESPONSE", UnsubscribeResponseMessage.class);
         }
     };
 

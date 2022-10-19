@@ -22,4 +22,7 @@ public class ClientState {
     public String stateToJson() {
         return (new Gson()).toJson(this);
     }
+    public static ClientState jsonToState(String json) {
+        return (new Gson()).fromJson(json, ClientState.class);
+    }
 }

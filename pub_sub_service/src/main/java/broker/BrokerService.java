@@ -2,6 +2,7 @@ package broker;
 
 import messages.Message;
 import messages.SubscribeMessage;
+import messages.UnsubscribeMessage;
 import org.zeromq.ZMQ.Socket;
 
 import java.util.ArrayList;
@@ -28,6 +29,9 @@ public class BrokerService {
         switch (this.message.getType()) {
             case SUBSCRIBE -> {
                 reply_message = serviceProcesser.subscribeMessageProcess((SubscribeMessage) this.message);
+            }
+            case UNSUBSCRIBE -> {
+                reply_message = serviceProcesser.unsubscribeMessageProcess((UnsubscribeMessage) this.message);
             }
             default -> System.out.println("Processing messages of type " + this.message.getType() + "is not implemented yet");
         }

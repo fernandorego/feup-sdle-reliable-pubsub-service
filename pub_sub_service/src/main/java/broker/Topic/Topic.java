@@ -79,6 +79,9 @@ public class Topic {
         this.clientIDs.add(clientId);
     }
 
+    public void removeClient(String clientId) {
+        this.clientIDs.remove(clientId);
+    }
 
     /**
      * @brief Insert a message into the topic
