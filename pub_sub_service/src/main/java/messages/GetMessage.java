@@ -1,13 +1,13 @@
-package requests;
+package messages;
 
 import com.google.gson.Gson;
 
-public class GetOperation extends Operation {
+public class GetMessage extends Message {
     private final String id;
     private final long offset;
 
-    public GetOperation(String id, String topic) {
-        super(topic, OperationType.GET);
+    public GetMessage(String id, String topic) {
+        super(topic, MessageType.GET);
         this.id = id;
         this.offset = 0; //TODO: get offset from file
     }
@@ -21,7 +21,7 @@ public class GetOperation extends Operation {
     }
 
     @Override
-    public String requestToJson() {
+    public String messageToJson() {
         return (new Gson()).toJson(this);
     }
 }

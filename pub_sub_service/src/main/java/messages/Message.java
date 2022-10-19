@@ -1,4 +1,4 @@
-package requests;
+package messages;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -7,35 +7,35 @@ import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class Operation {
+public abstract class Message {
     protected final String topic;
-    protected final OperationType type;
+    protected final MessageType type;
 
     private static final Map<String, Type> operationMap = new HashMap<>() {
         {
-            put("GET", GetOperation.class);
-            put("PUT", PutOperation.class);
-            put("SUBSCRIBE", SubscribeOperation.class);
-            put("UNSUBSCRIBE", UnsubscribeOperation.class);
+            put("GET", GetMessage.class);
+            put("PUT", PutMessage.class);
+            put("SUBSCRIBE", SubscribeMessage.class);
+            put("UNSUBSCRIBE", UnsubscribeMessage.class);
         }
     };
 
-    public Operation(String topic, OperationType type) {
+    public Message(String topic, MessageType type) {
         this.topic = topic;
         this.type = type;
     }
 
-    protected abstract String requestToJson();
+    public abstract String messageToJson();
 
     public String getTopic() {
         return topic;
     }
 
-    public OperationType getType() {
+    public MessageType getType() {
         return type;
     }
 
-    static public Operation jsonToRequest(String json) {
+    static public Message jsonToRequest(String json) {
         return (new Gson()).fromJson(json, operationMap.get(parseType(json)));
     }
 
