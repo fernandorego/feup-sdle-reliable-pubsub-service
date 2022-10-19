@@ -10,12 +10,12 @@ import java.util.ArrayList;
 public class BrokerService {
     private Message message;
     private final Socket server;
-    private final ServiceProcesser serviceProcesser;
+    private final BrokerServiceProcesser serviceProcesser;
 
     public BrokerService(Socket server) {
         this.message = null;
         this.server = server;
-        this.serviceProcesser = new ServiceProcesser(new ArrayList<>());
+        this.serviceProcesser = new BrokerServiceProcesser(new ArrayList<>());
     }
 
     public void setMessage(Message message) {

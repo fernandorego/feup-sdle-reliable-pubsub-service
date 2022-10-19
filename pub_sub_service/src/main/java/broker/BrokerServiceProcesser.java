@@ -7,10 +7,10 @@ import messages.SubscribeResponseMessage;
 
 import java.util.List;
 
-public class ServiceProcesser {
+public class BrokerServiceProcesser {
     private final List<Topic> topics;
 
-    public ServiceProcesser(List<Topic> topics) {
+    public BrokerServiceProcesser(List<Topic> topics) {
         this.topics = topics;
     }
 
