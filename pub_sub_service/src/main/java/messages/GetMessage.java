@@ -3,17 +3,23 @@ package messages;
 import com.google.gson.Gson;
 
 public class GetMessage extends Message {
-    private final String id;
+    private final String clientId;
+    private final String topic;
     private final long offset;
 
-    public GetMessage(String id, String topic) {
-        super(topic, MessageType.GET);
-        this.id = id;
+    public GetMessage(String topic, String clientId) {
+        super( MessageType.GET);
+        this.clientId = clientId;
+        this.topic = topic;
         this.offset = 0; //TODO: get offset from file
     }
 
-    public String getId() {
-        return id;
+    public String getClientId() {
+        return clientId;
+    }
+
+    public String getTopic() {
+        return topic;
     }
 
     public long getOffset() {

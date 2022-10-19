@@ -8,7 +8,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public abstract class Message {
-    protected final String topic;
     protected final MessageType type;
 
     private static final Map<String, Type> operationMap = new HashMap<>() {
@@ -20,16 +19,11 @@ public abstract class Message {
         }
     };
 
-    public Message(String topic, MessageType type) {
-        this.topic = topic;
+    public Message(MessageType type) {
         this.type = type;
     }
 
     public abstract String messageToJson();
-
-    public String getTopic() {
-        return topic;
-    }
 
     public MessageType getType() {
         return type;
