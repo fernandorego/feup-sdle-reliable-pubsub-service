@@ -38,6 +38,6 @@ public class Client {
         }
 
         ClientService service = new ClientService(message);
-        service.sendMessage();
+        service.processService();
     }
 }

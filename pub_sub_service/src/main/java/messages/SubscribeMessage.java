@@ -3,15 +3,22 @@ package messages;
 import com.google.gson.Gson;
 
 public class SubscribeMessage extends Message {
-    private final String id;
+    private final String client_id;
+    private final String topic;
 
-    public SubscribeMessage(String id, String topic) {
-        super(topic, MessageType.SUBSCRIBE);
-        this.id = id;
+
+    public SubscribeMessage(String topic, String client_id) {
+        super(MessageType.SUBSCRIBE);
+        this.topic = topic;
+        this.client_id = client_id;
     }
 
-    public String getId() {
-        return id;
+    public String getClientId() {
+        return client_id;
+    }
+
+    public String getTopic() {
+        return topic;
     }
 
     @Override

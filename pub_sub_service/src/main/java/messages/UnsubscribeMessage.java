@@ -3,14 +3,20 @@ package messages;
 import com.google.gson.Gson;
 
 public class UnsubscribeMessage extends Message {
-    private final String id;
-    public UnsubscribeMessage(String id, String topic) {
-        super(topic, MessageType.UNSUBSCRIBE);
-        this.id = id;
+    private final String clientId;
+    private final String topic;
+    public UnsubscribeMessage(String topic, String clientId) {
+        super(MessageType.UNSUBSCRIBE);
+        this.clientId = clientId;
+        this.topic = topic;
     }
 
-    public String getId() {
-        return id;
+    public String getClientId() {
+        return clientId;
+    }
+
+    public String getTopic() {
+        return topic;
     }
 
     @Override

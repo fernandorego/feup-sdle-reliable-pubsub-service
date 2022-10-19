@@ -8,14 +8,20 @@ import java.io.IOException;
 
 public class PutMessage extends Message {
     private final String message;
+    private final String topic;
 
     public PutMessage(String topic, String file_path) throws IOException {
-        super(topic, MessageType.PUT);
+        super(MessageType.PUT);
+        this.topic = topic;
         this.message = FileUtils.fileToString(file_path);
     }
 
     public String getMessage() {
         return message;
+    }
+
+    public String getTopic() {
+        return topic;
     }
 
     @Override

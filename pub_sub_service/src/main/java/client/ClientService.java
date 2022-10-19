@@ -1,6 +1,8 @@
 package client;
 
 import messages.Message;
+import messages.SubscribeMessage;
+import messages.SubscribeResponseMessage;
 import org.zeromq.SocketType;
 import org.zeromq.ZContext;
 import org.zeromq.ZMQ;
@@ -10,12 +12,14 @@ public class ClientService {
     private final static int REQUEST_RETRIES = 3;
     private final static String SERVER_ENDPOINT = "tcp://localhost:5555";
     private final String message;
+    private final ClientServiceProcesser clientService;
 
     public ClientService(Message message) {
+        this.clientService = new ClientServiceProcesser(message);
         this.message = message.messageToJson();
     }
 
-    public void sendMessage() {
+    public void processService() {
         try (ZContext ctx = new ZContext()) {
             System.out.println("Connecting to broker");
             ZMQ.Socket client = ctx.createSocket(SocketType.REQ);
@@ -28,20 +32,12 @@ public class ClientService {
             int retriesLeft = REQUEST_RETRIES;
             client.send(message);
 
-            int expect_reply = 1;
-            while (expect_reply > 0) {
+            while (retriesLeft-- != 0) {
                 int rc = poller.poll(REQUEST_TIMEOUT);
                 if (rc == -1) { break; }
 
                 if (poller.pollin(0)) {
-                    String reply = client.recvStr();
-                    if (reply == null) { break; }
-                    //TODO: parse server reply and do actions according to Message type
-                    System.out.printf("Server replied %s\n", reply);
-                    retriesLeft = REQUEST_RETRIES;
-                    expect_reply = 0;
-                } else if (--retriesLeft == 0) {
-                    System.out.println("Server seems to be offline, aborting\n");
+                    processReply(client);
                     break;
                 } else {
                     System.out.println("No response from server, retrying\n");
@@ -54,6 +50,26 @@ public class ClientService {
                     client.send(message);
                 }
             }
+
+            if (retriesLeft == 0) {
+                System.out.println("Server seems to be offline, aborting\n");
+            } else {
+                System.out.println("Operation terminated\n");
+            }
+            System.exit(1);
+        }
+    }
+
+    private void processReply(ZMQ.Socket client) {
+        String jsonMessage = client.recvStr();
+        if (jsonMessage == null) { return; }
+
+        Message reply = Message.jsonToRequest(jsonMessage);
+        switch (reply.getType()) {
+            case SUBSCRIBE_RESPONSE -> {
+                clientService.subscribeResponseMessageProcess((SubscribeResponseMessage) reply);
+            }
+            default -> System.out.println("Processing messages of type " + reply.getType() + "is not implemented yet");
         }
     }
 }

@@ -8,28 +8,26 @@ import java.util.HashMap;
 import java.util.Map;
 
 public abstract class Message {
-    protected final String topic;
     protected final MessageType type;
 
     private static final Map<String, Type> operationMap = new HashMap<>() {
         {
             put("GET", GetMessage.class);
+            //put("GET_RESPONSE", GetMessage.class);
             put("PUT", PutMessage.class);
+            //put("PUT_RESPONSE", PutMessage.class);
             put("SUBSCRIBE", SubscribeMessage.class);
+            put("SUBSCRIBE_RESPONSE", SubscribeResponseMessage.class);
             put("UNSUBSCRIBE", UnsubscribeMessage.class);
+            //put("UNSUBSCRIBE_RESPONSE", UnsubscribeMessage.class);
         }
     };
 
-    public Message(String topic, MessageType type) {
-        this.topic = topic;
+    public Message(MessageType type) {
         this.type = type;
     }
 
     public abstract String messageToJson();
-
-    public String getTopic() {
-        return topic;
-    }
 
     public MessageType getType() {
         return type;
