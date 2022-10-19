@@ -54,7 +54,7 @@ public class ClientService {
             if (retriesLeft == 0) {
                 System.out.println("Server seems to be offline, aborting\n");
             } else {
-                System.out.println("Operation successufuly executed\n");
+                System.out.println("Operation terminated\n");
             }
             System.exit(1);
         }
@@ -64,7 +64,6 @@ public class ClientService {
         String jsonMessage = client.recvStr();
         if (jsonMessage == null) { return; }
 
-        System.out.println(jsonMessage);
         Message reply = Message.jsonToRequest(jsonMessage);
         switch (reply.getType()) {
             case SUBSCRIBE_RESPONSE -> {

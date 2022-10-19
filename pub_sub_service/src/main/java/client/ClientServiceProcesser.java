@@ -28,5 +28,6 @@ public class ClientServiceProcesser {
             System.exit(1);
         }
         FileUtils.appendStringToFile((new ClientState(message.getTopic(),replyMessage.getOffset())).stateToJson() + "\n", file_path);
+        System.out.println("Client with id: " + message.getClientId() + " subscribed topic: " + message.getTopic());
     }
 }

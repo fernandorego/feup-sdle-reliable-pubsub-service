@@ -21,11 +21,11 @@ public class BrokerServiceProcesser {
             this.topics.add(topic);
         }
         if (topic.getClientIDs().contains(message.getClientId())) {
-            System.err.println("Client with id: " + message.getClientId() + " is already subscribed to the topic " + message.getTopic());
+            System.err.println("Client with id: " + message.getClientId() + " is already subscribed to the topic: " + message.getTopic());
             return new SubscribeResponseMessage(true,"Client is already subscribed to the topic: " + message.getTopic(), -1);
         }
         topic.addClient(message.getClientId());
-        System.out.println("Client with id: " + message.getClientId() + " subscribed topic " + message.getTopic());
+        System.out.println("Client with id: " + message.getClientId() + " subscribed topic: " + message.getTopic());
         return new SubscribeResponseMessage(false,"", topic.getOffset() + 1);
     }
 
