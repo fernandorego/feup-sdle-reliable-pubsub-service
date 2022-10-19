@@ -3,6 +3,7 @@ package client;
 import messages.Message;
 import messages.SubscribeMessage;
 import messages.SubscribeResponseMessage;
+import messages.UnsubscribeResponseMessage;
 import org.zeromq.SocketType;
 import org.zeromq.ZContext;
 import org.zeromq.ZMQ;
@@ -63,12 +64,10 @@ public class ClientService {
     private void processReply(ZMQ.Socket client) {
         String jsonMessage = client.recvStr();
         if (jsonMessage == null) { return; }
-
         Message reply = Message.jsonToRequest(jsonMessage);
         switch (reply.getType()) {
-            case SUBSCRIBE_RESPONSE -> {
-                clientService.subscribeResponseMessageProcess((SubscribeResponseMessage) reply);
-            }
+            case SUBSCRIBE_RESPONSE -> clientService.subscribeResponseMessageProcess((SubscribeResponseMessage) reply);
+            case UNSUBSCRIBE_RESPONSE -> clientService.unsubscribeResponseMessageProcess((UnsubscribeResponseMessage) reply);
             default -> System.out.println("Processing messages of type " + reply.getType() + "is not implemented yet");
         }
     }
