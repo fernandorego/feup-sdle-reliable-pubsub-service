@@ -1,13 +1,10 @@
 package broker;
 
-import broker.Topic.Topic;
 import messages.Message;
 import org.zeromq.SocketType;
 import org.zeromq.ZMQ.Socket;
 import org.zeromq.ZContext;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class Broker
 {
@@ -21,7 +18,6 @@ public class Broker
             while (true) {
                 String jsonMessage = server.recvStr();
                 Message message = Message.jsonToRequest(jsonMessage);
-                System.out.println(jsonMessage);
                 brokerService.setMessage(message);
                 brokerService.processMessage();
             }

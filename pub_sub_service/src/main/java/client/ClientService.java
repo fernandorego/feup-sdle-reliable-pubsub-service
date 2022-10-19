@@ -15,8 +15,8 @@ public class ClientService {
     private final ClientServiceProcesser clientService;
 
     public ClientService(Message message) {
+        this.clientService = new ClientServiceProcesser(message);
         this.message = message.messageToJson();
-        this.clientService = new ClientServiceProcesser();
     }
 
     public void processService() {
