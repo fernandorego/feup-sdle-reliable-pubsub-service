@@ -1,18 +1,24 @@
 package broker;
 
 import broker.topic.Topic;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import messages.*;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.List;
 
-public class BrokerServiceProcesser {
+public class BrokerServiceProcessor {
     private final List<Topic> topics;
 
-    public BrokerServiceProcesser(List<Topic> topics) {
+    private final String baseFilePath = "broker/";
+
+    public BrokerServiceProcessor(List<Topic> topics) {
         this.topics = topics;
     }
 
-    public Message subscribeMessageProcess(SubscribeMessage message) {
+    public Message subscribeMessageProcess(SubscribeMessage message) throws IOException{
         Topic topic = containsTopic(message.getTopic());
         if (topic == null) {
             topic = new Topic(message.getTopic());
@@ -21,15 +27,18 @@ public class BrokerServiceProcesser {
 
         if (topic.getClientIDs().containsKey(message.getClientId())) {
             System.err.println("Client with id: " + message.getClientId() + " is already subscribed to the topic: " + message.getTopic());
-            return new SubscribeResponseMessage(false,"", topic.getClientIDs().get(message.getClientId()));
+            return new SubscribeResponseMessage(true,"Client with id: " + message.getClientId() + " is already subscribed to the topic: " + message.getTopic(), topic.getClientIDs().get(message.getClientId()));
         }
 
         topic.addClient(message.getClientId(), topic.getOffset() + 1);
+
+        saveTopicState(topic);
+
         System.out.println("Client with id: " + message.getClientId() + " subscribed topic: " + message.getTopic());
         return new SubscribeResponseMessage(false,"", topic.getOffset() + 1);
     }
 
-    public Message unsubscribeMessageProcess(UnsubscribeMessage message) {
+    public Message unsubscribeMessageProcess(UnsubscribeMessage message) throws IOException {
         Topic topic = containsTopic(message.getTopic());
         if (topic == null) {
             System.err.println("Client with id: " + message.getClientId() + " tried to unsubscribe a topic that does not exist: " + message.getTopic());
@@ -40,11 +49,14 @@ public class BrokerServiceProcesser {
             return new UnsubscribeResponseMessage(true,"Client is already not subscribed to the topic: " + message.getTopic());
         }
         topic.removeClient(message.getClientId());
+
+        saveTopicState(topic);
+
         System.out.println("Client with id: " + message.getClientId() + " unsubscribed topic: " + message.getTopic());
         return new UnsubscribeResponseMessage(false,"");
     }
 
-    public Message putMessageProcess(PutMessage message) {
+    public Message putMessageProcess(PutMessage message) throws IOException{
         Topic topic = containsTopic(message.getTopic());
         String error;
 
@@ -61,13 +73,14 @@ public class BrokerServiceProcesser {
         }
 
         topic.insertMessageInTopic(message.getMessageUID(), message.getMessage());
-        System.out.println("A new message was added to topic: " + message.getTopic());
 
-        //TODO: fault tolerance of equal messages with the same uid
+        saveTopicState(topic);
+
+        System.out.println("A new message was added to topic: " + message.getTopic());
         return new PutResponseMessage(false,"");
     }
 
-    public Message getMessageProcess(GetMessage message) {
+    public Message getMessageProcess(GetMessage message) throws IOException {
         Topic topic = containsTopic(message.getTopic());
         String error;
         if (topic == null) {
@@ -91,6 +104,8 @@ public class BrokerServiceProcesser {
             return new GetResponseMessage(true, "There are no more messages from the topic: " + message.getTopic(), "", -1);
         }
 
+        saveTopicState(topic);
+
         System.out.println("A message from topic " + message.getTopic() + " was sent to client " + message.getClientId());
         return new GetResponseMessage(false,"",topic.getTopicMessages().get(offset), offset);
     }
@@ -98,5 +113,16 @@ public class BrokerServiceProcesser {
     private Topic containsTopic(String topicName) {
         for (Topic t: topics) { if (t.getTopicName().equals(topicName)) { return t; } }
         return null;
+    }
+
+    private void saveTopicState(Topic topic) throws IOException {
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
+        FileWriter n = new FileWriter(baseFilePath + topic.getTopicName() + ".json");
+
+        gson.toJson(topic,n);
+        /** Save contents to file **/
+        n.flush();
+        n.close();
     }
 }
