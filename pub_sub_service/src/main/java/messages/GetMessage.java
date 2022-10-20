@@ -30,4 +30,5 @@ public class GetMessage extends Message {
     public String messageToJson() {
         return (new Gson()).toJson(this);
     }
+
 }

@@ -20,11 +20,13 @@ public class BrokerServiceProcesser {
             topic = new Topic(message.getTopic());
             this.topics.add(topic);
         }
-        if (topic.getClientIDs().contains(message.getClientId())) {
+
+        if (topic.getClientIDs().containsKey(message.getClientId())) {
             System.err.println("Client with id: " + message.getClientId() + " is already subscribed to the topic: " + message.getTopic());
-            return new SubscribeResponseMessage(true,"Client is already subscribed to the topic: " + message.getTopic(), -1);
+            return new SubscribeResponseMessage(false,"", topic.getClientIDs().get(message.getClientId()));
         }
-        topic.addClient(message.getClientId());
+
+        topic.addClient(message.getClientId(), topic.getOffset() + 1);
         System.out.println("Client with id: " + message.getClientId() + " subscribed topic: " + message.getTopic());
         return new SubscribeResponseMessage(false,"", topic.getOffset() + 1);
     }
@@ -35,7 +37,7 @@ public class BrokerServiceProcesser {
             System.err.println("Client with id: " + message.getClientId() + " tried to unsubscribe a topic that does not exist: " + message.getTopic());
             return new UnsubscribeResponseMessage(true,"Topic does not exist: " + message.getTopic());
         }
-        if (!topic.getClientIDs().contains(message.getClientId())) {
+        if (!topic.getClientIDs().containsKey(message.getClientId())) {
             System.err.println("Client with id: " + message.getClientId() + " is already not subscribed to the topic: " + message.getTopic());
             return new UnsubscribeResponseMessage(true,"Client is already not subscribed to the topic: " + message.getTopic());
         }
