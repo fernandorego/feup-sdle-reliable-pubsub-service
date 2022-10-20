@@ -59,10 +59,35 @@ public class BrokerServiceProcesser {
 
         topic.insertMessageInTopic("", message.getMessage());
         System.out.println("A new message was added to topic " + message.getTopic());
-        for (Map.Entry<Long,String> entry: topic.getTopicMessages().entrySet()) {
-            System.out.println("Key = " + entry.getKey() + " ; Val = " + entry.getValue());
-        }
         return new PutResponseMessage(false,"");
+    }
+
+    public Message getMessageProcess(GetMessage message) {
+        Topic topic = containsTopic(message.getTopic());
+        String error;
+        if (topic == null) {
+            error = "Topic " + message.getTopic() + " does not exist to publish a message";
+            System.err.println(error);
+            return new GetResponseMessage(true, error, "", -1);
+        } else if (!topic.getClientIDs().containsKey(message.getClientId())) {
+            System.err.println("Client with id: " + message.getClientId() + " is not subscribed to the topic: " + message.getTopic());
+            return new GetResponseMessage(true, "Client is not subscribed to the topic: " + message.getTopic(), "", -1);
+        }
+
+        long offset = message.getOffset();
+        if (offset == -1) {
+            offset = topic.getClientIDs().get(message.getClientId());
+        } else {
+            topic.getClientIDs().put(message.getClientId(), offset);
+        }
+
+        if (!topic.getTopicMessages().containsKey(offset)) {
+            System.err.println("There are no more messages from the topic " + message.getTopic() + " to send to client " + message.getClientId());
+            return new GetResponseMessage(true, "There are no more messages from the topic " + message.getTopic(), "", -1);
+        }
+
+        System.out.println("A message from topic " + message.getTopic() + " was sent to client " + message.getClientId());
+        return new GetResponseMessage(false,"",topic.getTopicMessages().get(offset), offset);
     }
 
     private Topic containsTopic(String topicName) {

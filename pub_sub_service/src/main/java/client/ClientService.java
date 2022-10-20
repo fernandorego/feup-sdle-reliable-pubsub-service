@@ -66,6 +66,7 @@ public class ClientService {
             case SUBSCRIBE_RESPONSE -> clientService.subscribeResponseMessageProcess((SubscribeResponseMessage) reply);
             case UNSUBSCRIBE_RESPONSE -> clientService.unsubscribeResponseMessageProcess((UnsubscribeResponseMessage) reply);
             case PUT_RESPONSE -> clientService.putResponseMessageProcess((PutResponseMessage) reply);
+            case GET_RESPONSE -> clientService.getResponseMessageProcess((GetResponseMessage) reply);
             default -> System.out.println("Processing messages of type " + reply.getType() + "is not implemented yet");
         }
     }

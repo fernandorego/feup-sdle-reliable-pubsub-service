@@ -1,9 +1,6 @@
 package broker;
 
-import messages.Message;
-import messages.PutMessage;
-import messages.SubscribeMessage;
-import messages.UnsubscribeMessage;
+import messages.*;
 import org.zeromq.ZMQ.Socket;
 
 import java.util.ArrayList;
@@ -31,6 +28,7 @@ public class BrokerService {
             case SUBSCRIBE -> brokerServiceProcesser.subscribeMessageProcess((SubscribeMessage) this.message);
             case UNSUBSCRIBE -> brokerServiceProcesser.unsubscribeMessageProcess((UnsubscribeMessage) this.message);
             case PUT -> brokerServiceProcesser.putMessageProcess((PutMessage) this.message);
+            case GET -> brokerServiceProcesser.getMessageProcess((GetMessage) this.message);
             default -> null;
         };
         if (reply_message != null) {
