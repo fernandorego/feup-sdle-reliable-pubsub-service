@@ -22,7 +22,7 @@ public class BrokerService {
     }
 
     public void processMessage() {
-        Message reply_message = null;
+        Message reply_message;
         if (this.message == null) { return; }
         reply_message = switch (this.message.getType()) {
             case SUBSCRIBE -> brokerServiceProcesser.subscribeMessageProcess((SubscribeMessage) this.message);
@@ -37,6 +37,4 @@ public class BrokerService {
             System.out.println("Processing messages of type " + this.message.getType() + "is not implemented yet");
         }
     }
-
-
 }

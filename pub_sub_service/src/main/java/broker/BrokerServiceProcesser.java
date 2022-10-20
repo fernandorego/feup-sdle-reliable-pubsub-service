@@ -50,7 +50,7 @@ public class BrokerServiceProcesser {
         Topic topic = containsTopic(message.getTopic());
         String error;
         if (topic == null) {
-            error = "Topic " + message.getTopic() + " does not exist to publish a message";
+            error = "Topic: " + message.getTopic() + " does not exist to publish a message";
             System.err.println(error);
             return new PutResponseMessage(true, error);
         }
@@ -58,7 +58,7 @@ public class BrokerServiceProcesser {
         //TODO: fault tolerance of equal messages with the same uid
 
         topic.insertMessageInTopic("", message.getMessage());
-        System.out.println("A new message was added to topic " + message.getTopic());
+        System.out.println("A new message was added to topic: " + message.getTopic());
         return new PutResponseMessage(false,"");
     }
 
@@ -66,7 +66,7 @@ public class BrokerServiceProcesser {
         Topic topic = containsTopic(message.getTopic());
         String error;
         if (topic == null) {
-            error = "Topic " + message.getTopic() + " does not exist to publish a message";
+            error = "Topic: " + message.getTopic() + " does not exist to get a message";
             System.err.println(error);
             return new GetResponseMessage(true, error, "", -1);
         } else if (!topic.getClientIDs().containsKey(message.getClientId())) {
@@ -82,8 +82,8 @@ public class BrokerServiceProcesser {
         }
 
         if (!topic.getTopicMessages().containsKey(offset)) {
-            System.err.println("There are no more messages from the topic " + message.getTopic() + " to send to client " + message.getClientId());
-            return new GetResponseMessage(true, "There are no more messages from the topic " + message.getTopic(), "", -1);
+            System.err.println("There are no more messages from the topic: " + message.getTopic() + " to send to client " + message.getClientId());
+            return new GetResponseMessage(true, "There are no more messages from the topic: " + message.getTopic(), "", -1);
         }
 
         System.out.println("A message from topic " + message.getTopic() + " was sent to client " + message.getClientId());
