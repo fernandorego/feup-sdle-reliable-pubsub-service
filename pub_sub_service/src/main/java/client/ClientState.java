@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 
 public class ClientState {
     private final String topic;
-    private final long offset;
+    private long offset;
 
     public ClientState(String topic, long offset) {
         this.topic = topic;
@@ -17,6 +17,10 @@ public class ClientState {
 
     public String getTopic() {
         return topic;
+    }
+
+    public void setOffset(long offset) {
+        this.offset = offset;
     }
 
     public String stateToJson() {

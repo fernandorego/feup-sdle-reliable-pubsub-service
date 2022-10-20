@@ -7,7 +7,7 @@ import java.io.*;
 
 public class ClientServiceProcesser {
     private final static String CLIENT_DIR_PATH = "./client/";
-    private Message message;
+    private final Message message;
     public ClientServiceProcesser(Message message) {
         this.message = message;
     }
@@ -50,5 +50,45 @@ public class ClientServiceProcesser {
             System.exit(1);
         }
         System.out.println("Client with id: " + unsubscribeMessage.getClientId() + " unsubscribed topic: " + unsubscribeMessage.getTopic());
+    }
+
+    public void putResponseMessageProcess(PutResponseMessage replyMessage) {
+        PutMessage putMessage = (PutMessage) message;
+        if (replyMessage.getError()) {
+            System.err.println(replyMessage.getError_message());
+            return;
+        }
+
+        System.out.println("New message was added to topic " + putMessage.getTopic());
+    }
+
+    public void getResponseMessageProcess(GetResponseMessage replyMessage) {
+        GetMessage getMessage = (GetMessage) message;
+        if (replyMessage.getError()) {
+            System.err.println(replyMessage.getError_message());
+            return;
+        }
+
+        String file_path = CLIENT_DIR_PATH + getMessage.getClientId();
+        try (BufferedReader br = new BufferedReader(new FileReader(file_path))) {
+            String json;
+            String file = "";
+            while ((json = br.readLine()) != null) {
+                ClientState clientState = ClientState.jsonToState(json);
+                if (clientState.getTopic().equals(getMessage.getTopic())) {
+                    clientState.setOffset(replyMessage.getOffset() + 1);
+                    file = file.concat(clientState.stateToJson() + "\n");
+                } else {
+                    file = file.concat(json + "\n");
+                }
+            }
+            FileUtils.stringToFile(file, file_path);
+        } catch (IOException e) {
+            System.out.println(e.toString());
+            System.exit(1);
+        }
+
+        System.out.println("Message recieved from topic " + getMessage.getTopic() + ":");
+        System.out.println(replyMessage.getMessage());
     }
 }

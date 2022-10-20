@@ -8,16 +8,16 @@ import java.util.List;
 public class Topic {
     private String topicName;
 
-    private int offset;
+    private long offset;
 
     /** Contains all the uniqueIds of the messages **/
     private LinkedHashSet<String> messageUIds;
 
     /** Contains the topic messages with the 'offset' associated to each message **/
-    private HashMap<Integer, String> topicMessages;
+    private HashMap<Long, String> topicMessages;
 
     /** Contains all the uniqueIds of the clients **/
-    private List<String> clientIDs;
+    private HashMap<String, Long> clientIDs;
 
     /** If in the future we want to implement High WaterMark, we just need to keep a list of the offsets and the given
         subscriber name
@@ -33,7 +33,7 @@ public class Topic {
         this.offset = -1; /** Starts at -1, since when the first message will have offset equal to 0 **/
         this.messageUIds = new LinkedHashSet<>();
         this.topicMessages = new HashMap<>();
-        this.clientIDs = new ArrayList<>();
+        this.clientIDs = new HashMap<>();
     }
 
     /**
@@ -44,11 +44,12 @@ public class Topic {
      * @param messageUIds - topic messages unique ids
      * @param topicMessages - topic messages, and correspondent offsets
      */
-    public Topic(String topicName, int offset, LinkedHashSet<String> messageUIds, HashMap<Integer, String> topicMessages) {
+    public Topic(String topicName, long offset, LinkedHashSet<String> messageUIds, HashMap<Long, String> topicMessages, HashMap<String, Long> clientIDs) {
         this.topicName = topicName;
         this.offset = offset;
         this.messageUIds = messageUIds;
         this.topicMessages = topicMessages;
+        this.clientIDs = clientIDs;
     }
 
     /**
@@ -63,7 +64,7 @@ public class Topic {
         offset++;
     }
 
-    public int getOffset() {
+    public long getOffset() {
         return offset;
     }
 
@@ -71,12 +72,16 @@ public class Topic {
         return topicName;
     }
 
-    public List<String> getClientIDs() {
+    public HashMap<Long, String> getTopicMessages() {
+        return topicMessages;
+    }
+
+    public HashMap<String, Long> getClientIDs() {
         return clientIDs;
     }
 
-    public void addClient(String clientId) {
-        this.clientIDs.add(clientId);
+    public void addClient(String clientId, long offset) {
+        this.clientIDs.put(clientId, offset);
     }
 
     public void removeClient(String clientId) {

@@ -1,9 +1,6 @@
 package client;
 
-import messages.Message;
-import messages.SubscribeMessage;
-import messages.SubscribeResponseMessage;
-import messages.UnsubscribeResponseMessage;
+import messages.*;
 import org.zeromq.SocketType;
 import org.zeromq.ZContext;
 import org.zeromq.ZMQ;
@@ -68,6 +65,8 @@ public class ClientService {
         switch (reply.getType()) {
             case SUBSCRIBE_RESPONSE -> clientService.subscribeResponseMessageProcess((SubscribeResponseMessage) reply);
             case UNSUBSCRIBE_RESPONSE -> clientService.unsubscribeResponseMessageProcess((UnsubscribeResponseMessage) reply);
+            case PUT_RESPONSE -> clientService.putResponseMessageProcess((PutResponseMessage) reply);
+            case GET_RESPONSE -> clientService.getResponseMessageProcess((GetResponseMessage) reply);
             default -> System.out.println("Processing messages of type " + reply.getType() + "is not implemented yet");
         }
     }
