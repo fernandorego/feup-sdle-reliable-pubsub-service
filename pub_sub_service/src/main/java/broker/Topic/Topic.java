@@ -8,13 +8,13 @@ import java.util.List;
 public class Topic {
     private String topicName;
 
-    private int offset;
+    private long offset;
 
     /** Contains all the uniqueIds of the messages **/
     private LinkedHashSet<String> messageUIds;
 
     /** Contains the topic messages with the 'offset' associated to each message **/
-    private HashMap<Integer, String> topicMessages;
+    private HashMap<Long, String> topicMessages;
 
     /** Contains all the uniqueIds of the clients **/
     private List<String> clientIDs;
@@ -44,7 +44,7 @@ public class Topic {
      * @param messageUIds - topic messages unique ids
      * @param topicMessages - topic messages, and correspondent offsets
      */
-    public Topic(String topicName, int offset, LinkedHashSet<String> messageUIds, HashMap<Integer, String> topicMessages) {
+    public Topic(String topicName, long offset, LinkedHashSet<String> messageUIds, HashMap<Long, String> topicMessages) {
         this.topicName = topicName;
         this.offset = offset;
         this.messageUIds = messageUIds;
@@ -63,12 +63,16 @@ public class Topic {
         offset++;
     }
 
-    public int getOffset() {
+    public long getOffset() {
         return offset;
     }
 
     public String getTopicName() {
         return topicName;
+    }
+
+    public HashMap<Long, String> getTopicMessages() {
+        return topicMessages;
     }
 
     public List<String> getClientIDs() {

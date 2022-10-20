@@ -4,6 +4,8 @@ import broker.Topic.Topic;
 import messages.*;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 public class BrokerServiceProcesser {
     private final List<Topic> topics;
@@ -40,6 +42,25 @@ public class BrokerServiceProcesser {
         topic.removeClient(message.getClientId());
         System.out.println("Client with id: " + message.getClientId() + " unsubscribed topic: " + message.getTopic());
         return new UnsubscribeResponseMessage(false,"");
+    }
+
+    public Message putMessageProcess(PutMessage message) {
+        Topic topic = containsTopic(message.getTopic());
+        String error;
+        if (topic == null) {
+            error = "Topic " + message.getTopic() + " does not exist to publish a message";
+            System.err.println(error);
+            return new PutResponseMessage(true, error);
+        }
+
+        //TODO: fault tolerance of equal messages with the same uid
+
+        topic.insertMessageInTopic("", message.getMessage());
+        System.out.println("A new message was added to topic " + message.getTopic());
+        for (Map.Entry<Long,String> entry: topic.getTopicMessages().entrySet()) {
+            System.out.println("Key = " + entry.getKey() + " ; Val = " + entry.getValue());
+        }
+        return new PutResponseMessage(false,"");
     }
 
     private Topic containsTopic(String topicName) {
