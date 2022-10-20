@@ -51,4 +51,14 @@ public class ClientServiceProcesser {
         }
         System.out.println("Client with id: " + unsubscribeMessage.getClientId() + " unsubscribed topic: " + unsubscribeMessage.getTopic());
     }
+
+    public void putResponseMessageProcess(PutResponseMessage replyMessage) {
+        PutMessage putMessage = (PutMessage) message;
+        if (replyMessage.getError()) {
+            System.err.println(replyMessage.getError_message());
+            return;
+        }
+
+        System.out.println("New message was added to topic " + putMessage.getTopic());
+    }
 }
