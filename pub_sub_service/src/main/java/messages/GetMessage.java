@@ -14,7 +14,7 @@ public class GetMessage extends Message {
     private final long offset;
 
     public GetMessage(String topic, String clientId) {
-        super( MessageType.GET);
+        super(MessageType.GET);
         this.clientId = clientId;
         this.topic = topic;
         this.offset = getTopicOffset();
