@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import messages.*;
 import org.zeromq.ZMQ.Socket;
+import utils.FileUtils;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -18,6 +19,7 @@ import java.util.List;
 
 
 public class BrokerService {
+    private final String BROKER_DIR_PATH = "broker/";
     private Message message;
     private final Socket server;
     private final BrokerServiceProcessor brokerServiceProcessor;
@@ -53,7 +55,9 @@ public class BrokerService {
 
         List<Topic> topicList = new ArrayList<>();
 
-        Files.walk(Paths.get("broker/")).filter(file -> !file.toFile().isDirectory()).forEach(f -> {
+        FileUtils.createDir(BROKER_DIR_PATH);
+
+        Files.walk(Paths.get(BROKER_DIR_PATH)).filter(file -> !file.toFile().isDirectory()).forEach(f -> {
             try {
                 Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
@@ -69,7 +73,4 @@ public class BrokerService {
 
         return topicList;
     }
-
-
-
 }

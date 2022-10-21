@@ -5,9 +5,11 @@ import org.zeromq.SocketType;
 import org.zeromq.ZMQ.Socket;
 import org.zeromq.ZContext;
 
+import java.io.IOException;
+
 public class Broker
 {
-    public static void main(String[] argv) throws Exception
+    public static void main(String[] argv)
     {
         try (ZContext context = new ZContext()) {
             Socket server = context.createSocket(SocketType.REP);
@@ -20,6 +22,8 @@ public class Broker
                 brokerService.processMessage();
                 System.out.println();
             }
+        } catch (IOException e) {
+            System.out.println(e.toString());
         }
     }
 }
