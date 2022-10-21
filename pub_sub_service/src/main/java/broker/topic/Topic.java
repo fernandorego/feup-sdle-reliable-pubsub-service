@@ -1,9 +1,7 @@
-package broker.Topic;
+package broker.topic;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
-import java.util.List;
 
 public class Topic {
     private String topicName;

@@ -9,8 +9,7 @@ import java.io.IOException;
 
 public class Client {
 
-    public static void main(String[] argv)
-    {
+    public static void main(String[] argv) {
         String error_message = "Parsing client arguments error";
         if (argv.length != 3) {
             ErrorUtils.usageError(error_message);

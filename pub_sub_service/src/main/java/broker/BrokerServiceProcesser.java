@@ -1,11 +1,9 @@
 package broker;
 
-import broker.Topic.Topic;
+import broker.topic.Topic;
 import messages.*;
 
 import java.util.List;
-import java.util.Locale;
-import java.util.Map;
 
 public class BrokerServiceProcesser {
     private final List<Topic> topics;
@@ -49,16 +47,23 @@ public class BrokerServiceProcesser {
     public Message putMessageProcess(PutMessage message) {
         Topic topic = containsTopic(message.getTopic());
         String error;
+
         if (topic == null) {
             error = "Topic: " + message.getTopic() + " does not exist to publish a message";
             System.err.println(error);
             return new PutResponseMessage(true, error);
         }
 
-        //TODO: fault tolerance of equal messages with the same uid
+        if(topic.isMessageInTopic(message.getMessageUID())) {
+            error = "Message with UID: " + message.getMessageUID() + " is already in Topic: " + message.getTopic();
+            System.err.println(error);
+            return new PutResponseMessage(true, error);
+        }
 
-        topic.insertMessageInTopic("", message.getMessage());
+        topic.insertMessageInTopic(message.getMessageUID(), message.getMessage());
         System.out.println("A new message was added to topic: " + message.getTopic());
+
+        //TODO: fault tolerance of equal messages with the same uid
         return new PutResponseMessage(false,"");
     }
 
