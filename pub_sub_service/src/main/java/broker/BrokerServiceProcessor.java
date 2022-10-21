@@ -99,6 +99,8 @@ public class BrokerServiceProcessor {
             topic.getClientIDs().put(message.getClientId(), offset);
         }
 
+        topic.deletePastMessages();
+
         if (!topic.getTopicMessages().containsKey(offset)) {
             System.err.println("There are no more messages from the topic: " + message.getTopic() + " to send to client " + message.getClientId());
             return new GetResponseMessage(true, "There are no more messages from the topic: " + message.getTopic(), "", -1);
@@ -121,7 +123,7 @@ public class BrokerServiceProcessor {
         FileWriter n = new FileWriter(baseFilePath + topic.getTopicName() + ".json");
 
         gson.toJson(topic,n);
-        /** Save contents to file **/
+
         n.flush();
         n.close();
     }
