@@ -61,25 +61,25 @@ bash broker.sh
 - [x] Messages - Fernando Rego
     - [x] Creation of classes and messages for each operation
     - [x] Serialization and deserialization of the messages
-- [ ] Create a broker, server like intermediate of communication containing topics
-    - [ ] Create broker capable of having multiple topics 
-    - [ ] Create topic 
-- [ ] Create a mechanism from message UID (hashing the message, and summing the thread ID, to allow sending equal messages but in different requests) 
-- [ ] Save state upon process failure:
-    - [ ] Make the broker(that as topics) save its state, when the process dies. (Save the state to a file, etc…)
-    - [ ] Make the subscriber save, its state, when the process dies (Offset, and messages received) (Save the state to a file, etc…)
-    - [ ] Make the publisher save, its state, when the process dies (Offset, and messages received) (Save the state to a file, etc…)
-- [ ] Multithreaded writes and reads:
-    - [ ] Make the broker, asynchronous, being able to receive messages and write it on the topic and dispatching them to the subscriber upon request
-    - [ ] Make the publisher, asynchronous, being able to send multiple messages and handling errors, when a message is not successfully received by the broker
-    - [ ] Make the subscriber, able to receive messages and handling errors, when a message is not successfully received by the subscriber
-- [ ] Fault Tolerance:
-    - [ ] Broker, (no need) just having the need to keep state upon failure
-    - [ ] Subscriber, send the message and being able to handle failure and guarantying exactly once (UID, hashing message and thread ID)
-    - [ ] Publisher, receive the message and being able to handle failure and guarantying exactly once (Synchronised offsets)
-- [ ] If we have time: 
-    - [ ] Implement High Water Mark in the broker, to clean topic messages, that are not necessary! (We need to make sure, the ACKS have been received)
-- [ ] External Libraries: 
+- [x] Create a broker, server like intermediate of communication containing topics
+    - [x] Create broker capable of having multiple topics 
+    - [x] Create topic 
+- [x] Create a mechanism from message UID (hashing the message, and summing the thread ID, to allow sending equal messages but in different requests) 
+- [x] Save state upon process failure:
+    - [x] Make the broker(that as topics) save its state, when the process dies. (Save the state to a file, etc…)
+    - [x] Make the subscriber save, its state, when the process dies (Offset, and messages received) (Save the state to a file, etc…)
+    - [x] Make the publisher save, its state, when the process dies (Offset, and messages received) (Save the state to a file, etc…)
+- [x] Multithreaded writes and reads:
+    - [x] Make the broker, asynchronous, being able to receive messages and write it on the topic and dispatching them to the subscriber upon request
+    - [x] Make the publisher, asynchronous, being able to send multiple messages and handling errors, when a message is not successfully received by the broker
+    - [x] Make the subscriber, able to receive messages and handling errors, when a message is not successfully received by the subscriber
+- [x] Fault Tolerance:
+    - [x] Broker, (no need) just having the need to keep state upon failure
+    - [x] Subscriber, send the message and being able to handle failure and guarantying exactly once (UID, hashing message and thread ID)
+    - [x] Publisher, receive the message and being able to handle failure and guarantying exactly once (Synchronised offsets)
+- [x] If we have time: 
+    - [x] Implement High Water Mark in the broker, to clean topic messages, that are not necessary! (We need to make sure, the ACKS have been received)
+- [x] External Libraries: 
   - [x] Log4j, java logger, GSON
 
 Group members:
