@@ -9,7 +9,7 @@ public class Topic {
     private long offset;
 
     /** Contains all the uniqueIds of the messages **/
-    private LinkedHashSet<String> messageUIds;
+    private HashMap<Long, String> messageUIds;
 
     /** Contains the topic messages with the 'offset' associated to each message **/
     private HashMap<Long, String> topicMessages;
@@ -29,7 +29,7 @@ public class Topic {
     public Topic(String topicName) {
         this.topicName = topicName;
         this.offset = -1; /** Starts at -1, since when the first message will have offset equal to 0 **/
-        this.messageUIds = new LinkedHashSet<>();
+        this.messageUIds = new HashMap<>();
         this.topicMessages = new HashMap<>();
         this.clientIDs = new HashMap<>();
     }
@@ -42,7 +42,7 @@ public class Topic {
      * @param messageUIds - topic messages unique ids
      * @param topicMessages - topic messages, and correspondent offsets
      */
-    public Topic(String topicName, long offset, LinkedHashSet<String> messageUIds, HashMap<Long, String> topicMessages, HashMap<String, Long> clientIDs) {
+    public Topic(String topicName, long offset, HashMap<Long, String> messageUIds, HashMap<Long, String> topicMessages, HashMap<String, Long> clientIDs) {
         this.topicName = topicName;
         this.offset = offset;
         this.messageUIds = messageUIds;
@@ -55,7 +55,7 @@ public class Topic {
      * @return True if message is already in topic, False otherwise
      */
     public boolean isMessageInTopic(String messageUID) {
-        return messageUIds.contains(messageUID);
+        return messageUIds.containsValue(messageUID);
     }
 
     private void incrementOffset() {
@@ -94,7 +94,7 @@ public class Topic {
     public void insertMessageInTopic(String messageUID, String message) {
         incrementOffset();
 
-        messageUIds.add(messageUID);
+        messageUIds.put(offset, messageUID);
 
         topicMessages.put(offset, message);
     }
@@ -110,5 +110,6 @@ public class Topic {
         }
         long finalLowest_offset = lowest_offset;
         topicMessages.entrySet().removeIf(entry -> finalLowest_offset > entry.getKey());
+        messageUIds.entrySet().removeIf(entry -> finalLowest_offset > entry.getKey());
     }
 }
