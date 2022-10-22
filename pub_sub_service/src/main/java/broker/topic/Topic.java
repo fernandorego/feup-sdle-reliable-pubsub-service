@@ -98,4 +98,17 @@ public class Topic {
 
         topicMessages.put(offset, message);
     }
+
+    public void deletePastMessages() {
+        if (topicMessages.isEmpty() || clientIDs.isEmpty()) { return; }
+        long lowest_offset = Long.MAX_VALUE;
+
+        for (long offset : clientIDs.values()) {
+            if (offset < lowest_offset) {
+                lowest_offset = offset;
+            }
+        }
+        long finalLowest_offset = lowest_offset;
+        topicMessages.entrySet().removeIf(entry -> finalLowest_offset > entry.getKey());
+    }
 }
