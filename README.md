@@ -2,6 +2,8 @@
 
 SDLE First Assignment of group T06G11.
 
+## [Final report here](https://git.fe.up.pt/sdle/2022/t6/g11/proj1/-/blob/main/doc/report.pdf)
+
 ## **Compile and Run**
 
 
